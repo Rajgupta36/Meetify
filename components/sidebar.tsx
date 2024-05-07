@@ -9,7 +9,7 @@ import { signOut } from 'next-auth/react';
 const Sidebar = () => {
     const pathname =usePathname();
   return (
-    <div className=' basis-1/5 h-screen bg-dark-2 text-white'>
+    <div className=' basis-1/5  bg-dark-2 text-white'>
       {sidebarLinks.map((item)=>{
           const isActive = pathname  ===item.link 
           const textColor = isActive ? 'bg-dark-3' : 'bg-dark-2';

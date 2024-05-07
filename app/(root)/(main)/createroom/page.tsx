@@ -8,6 +8,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useEffect, useState } from "react";
 import Loader from "@/components/loader";
 import { tokenProvider } from "@/hooks/useSession";
+import { Copy } from "lucide-react";
 
 const Table = ({
   title,
@@ -18,7 +19,7 @@ const Table = ({
 }) => {
   return (
     <div className="flex flex-col items-start gap-2 xl:flex-row">
-      <h1 className="text-base font-medium text-sky-1 lg:text-xl xl:min-w-32">
+      <h1 className="text-base font-medium   text-sky-200 lg:text-xl xl:min-w-32">
         {title}:
       </h1>
       <h1 className="truncate text-sm font-bold max-sm:max-w-[320px] lg:text-xl">
@@ -71,7 +72,7 @@ const PersonalRoom = () => {
   const meetingLink = `${process.env.NEXT_PUBLIC_API_URL}/meeting/${meetingId}?personal=true`;
 
   return (
-    <section className="p-8 flex size-full flex-col gap-10 text-white">
+    <section className="bg-dark-2 m-8 p-6 rounded-[14px] flex  flex-col gap-10 text-white">
       <h1 className="text-xl font-bold lg:text-3xl">Personal Meeting Room</h1>
       <div className="flex w-full flex-col gap-8 xl:max-w-[900px]">
         <Table title="Topic" description={`${user?.name}'s Meeting Room`} />
@@ -91,7 +92,7 @@ const PersonalRoom = () => {
             });
           }}
         >
-          Copy Invitation
+         <Copy/> Copy Invitation
         </Button>
       </div>
     </section>

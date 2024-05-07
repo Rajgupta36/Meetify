@@ -40,7 +40,7 @@ const config = {
         }
       },
       backgroundImage: {
-        "hero": "url('https://source.unsplash.com/a-close-up-of-a-yellow-and-white-wall-5DD7-L4A4Uw')"
+        hero: "url('/hero-background.jpg')",
       }
     },
   },

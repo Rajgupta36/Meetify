@@ -8,7 +8,7 @@ const Navbar = async() => {
   return (
     <div className='bg-dark-2 h-16 w-auto flex flex-row justify-between items-center  text-white'>
       <div className='ml-4 p-4 flex flex-row justify-center items-center font-bold text-2xl'><Image
-      src="next.svg"
+      src="/logo.png"
       width={52}
       height={52}
       quality={100}

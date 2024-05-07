@@ -6,13 +6,14 @@ import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { avatarImages } from "@/constants";
 import { useToast } from "./ui/use-toast";
+import { Copy } from "lucide-react";
 
 interface CallPreviewCardProps {
   title: string;
   date: string;
-  icon: string;
+  icon: React.ReactNode;
   isPreviousMeeting?: boolean;
-  buttonIcon1?: string;
+  buttonIcon1?: React.ReactNode;
   buttonText?: string;
   handleClick: () => void;
   link: string;
@@ -31,9 +32,9 @@ const CallPreviewCard = ({
   const { toast } = useToast();
 
   return (
-    <section className="flex min-h-[258px] w-full flex-col justify-between rounded-[14px] bg-dark-1 px-5 py-8 xl:max-w-[568px]">
+    <section className="flex min-h-[258px] w-full flex-col justify-between rounded-[14px] bg-dark-2 px-5 py-8 xl:max-w-[568px]">
       <article className="flex flex-col gap-5">
-        <Image src={icon} alt="upcoming" width={28} height={28} />
+        {icon}
         <div className="flex justify-between">
           <div className="flex flex-col gap-2">
             <h1 className="text-2xl font-bold">{title}</h1>
@@ -62,7 +63,7 @@ const CallPreviewCard = ({
           <div className="flex gap-2">
             <Button onClick={handleClick} className="rounded bg-blue-1 px-6">
               {buttonIcon1 && (
-                <Image src={buttonIcon1} alt="feature" width={20} height={20} />
+                buttonIcon1
               )}
               &nbsp; {buttonText}
             </Button>
@@ -75,12 +76,7 @@ const CallPreviewCard = ({
               }}
               className="bg-dark-4 px-6"
             >
-              <Image
-                src="/icons/copy.svg"
-                alt="feature"
-                width={20}
-                height={20}
-              />
+              <Copy/>
               &nbsp; Copy Link
             </Button>
           </div>

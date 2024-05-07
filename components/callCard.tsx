@@ -7,6 +7,7 @@ import { useGetCall } from '@/hooks/useGetCall';
 import CallPreviewCard from './callpreviewcard';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Calendar, CalendarCheck, Clapperboard, Play } from 'lucide-react';
 
 const CallList = ({ type }: { type: 'ended' | 'upcoming' | 'recordings' }) => {
   const router = useRouter();
@@ -74,10 +75,10 @@ const CallList = ({ type }: { type: 'ended' | 'upcoming' | 'recordings' }) => {
             key={(meeting as Call).id}
             icon={
               type === 'ended'
-                ? '/icons/previous.svg'
+                ? <CalendarCheck />
                 : type === 'upcoming'
-                  ? '/icons/upcoming.svg'
-                  : '/icons/recordings.svg'
+                  ? <Calendar />
+                  : <Clapperboard />
             }
             title={
               (meeting as Call).state?.custom?.description ||
@@ -94,7 +95,7 @@ const CallList = ({ type }: { type: 'ended' | 'upcoming' | 'recordings' }) => {
                 ? (meeting as CallRecording).url
                 : `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${(meeting as Call).id}`
             }
-            buttonIcon1={type === 'recordings' ? '/icons/play.svg' : undefined}
+            buttonIcon1={type === 'recordings' ?  <Play /> : undefined}
             buttonText={type === 'recordings' ? 'Play' : 'Start'}
             handleClick={
               type === 'recordings'

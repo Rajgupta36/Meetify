@@ -9,6 +9,8 @@ import { useToast } from './ui/use-toast';
 import { Textarea } from './ui/textarea';
 import ReactDatePicker from "react-datepicker"
 import { Input } from './ui/input';
+import { Copy } from 'lucide-react';
+import Svgcomponenet from './svg';
 
 const Meetinglist = () => {
   const { toast } = useToast()
@@ -57,26 +59,26 @@ const Meetinglist = () => {
   return (
     <div>
       <div  className=' mx-6 grid  gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-4'>
-            <Meetingcard img={"joo"} 
+            <Meetingcard img={"/plus.png"} 
             title ={`New Meeting `}
             description={`Setup a new recording`}
             className={"bg-orange-1"}
             handleClick={() => setMeetingState('isInstantMeeting')}
             />
-            <Meetingcard img="hii" 
+            <Meetingcard img="/user-plus.png" 
             title ={"Join Meeting"}
             description={`via invite link`}
             className="bg-blue-1"
             handleClick={() => setMeetingState('isJoiningMeeting')}
             />
             
-            <Meetingcard img="hii" 
+            <Meetingcard img="/calendar-days.png" 
             title ={"Schedule Meeting"}
             description={`hii`}
             className="bg-violet-1"
             handleClick={() => setMeetingState('isScheduleMeeting')}
             />
-            <Meetingcard img="hii" 
+            <Meetingcard img="/video.png" 
             title ={"View Meeting"}
             description={`Meeting recordings`}
             className="bg-yellow-1"
@@ -115,8 +117,9 @@ const Meetinglist = () => {
               toast({title:'Link copied'})
             }
             }
-            image='icon.svg'
-            buttonIcon=''
+
+            image=<Svgcomponenet/>
+            buttonIcon=<Copy/>
             buttonText="Copy Meeting Link"
             className='text-center'
             

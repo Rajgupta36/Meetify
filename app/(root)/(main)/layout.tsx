@@ -8,7 +8,7 @@ const Layout: React.FC = ({ children }:any) => {
    <Navbar/>
    <div className="flex">
     <Sidebar/>
-    <div className="bg-dark-1 w-full basis-4/5 h-screen">{children}</div>
+    <div className="bg-dark-1 w-full basis-4/5 h-full">{children}</div>
    </div>
    </div>
     );

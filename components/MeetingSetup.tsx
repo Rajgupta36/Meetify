@@ -20,7 +20,7 @@ const MeetingSetup = ({setUpComplete}:{setUpComplete:(value:boolean)=>void}) => 
   },[isMicCamOn,call?.microphone,call?.camera])
   
   return (
-    <div className='flex h-screen w-full flex-col items-center justify-center gap-3 text-white'>
+    <div className='bg-dark-1 flex h-screen w-full flex-col items-center justify-center gap-3 text-white'>
         <h1 className='text-2xl font-bold'>SetUp</h1>
         <VideoPreview/>
         <div className='flex h-16 items-center justify-center gap-3'>
