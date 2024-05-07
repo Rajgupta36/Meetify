@@ -17,7 +17,7 @@ const Navbar = async() => {
    
       <div className='mr-8 -3 px-6 py-2 rounded-md flex items-center justify-center'>
   {session ? (
-    <img
+    <Image
       className='rounded-full border-2 border-white'
       src={session.user.image}
       height={48}

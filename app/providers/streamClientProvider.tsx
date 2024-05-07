@@ -9,10 +9,6 @@ import Loader from '@/components/loader';
 import { useSession } from 'next-auth/react';
 const apiKey = process.env.NEXT_PUBLIC_STREAM_API_KEY;
 import { useRouter } from 'next/navigation';
-
-
-
-
 const StreamVideoProvider = ({children}:{children:React.ReactNode}) => {
   const router = useRouter();
   const {data:session,status} =  useSession();
