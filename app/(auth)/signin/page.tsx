@@ -65,9 +65,9 @@ function Page() {
 
   return (
     <div className='bg-dark-1 text-white h-screen w-screen gap-4 flex items-center justify-center align-middle'>
-      <div className='p-2 ml-4 bg-dark-2 w-1/4  rounded-[16px]'>
+      <div className='p-2 ml-4 bg-dark-2  max-w-[380px]  rounded-[16px] mx-4'>
         <div className='mx-4 mt-12 flex  items-center'><Image alt='logo' src='/logo.png' height={54} width={54} />
-          <h2 className='text-3xl  font-extrabold'>Meetify</h2></div>
+          <h2 className='text-2xl  font-extrabold sm:text-3xl'>Meetify</h2></div>
         <p className='ml-6 font-thin '>to continue to Meetify </p>
         <div className='flex mt-6 ml-6'>
           <div onClick={async () => {
@@ -117,7 +117,7 @@ function Page() {
 
         </div>
         <div className='flex justify-between align-center mt-8 ml-6'>
-          <div className='text-sm '>No account? <a className='text-blue-1 cursor-pointer' onClick={() => { router.push('/signup'); } }> Sign up</a></div>
+          <div className='text-sm '>No account? <a className='text-blue-1 cursor-pointer' onClick={() => { router.push('/signup'); } }><br/> Sign up</a></div>
           <div className='flex gap-3 mr-3 text-sm mb-4'><button>Help</button> <button>Privacy</button> <button>Terms</button></div>
         </div>
       </div>
