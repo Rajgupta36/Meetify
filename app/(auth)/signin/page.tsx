@@ -93,12 +93,6 @@ function Page() {
         <div className='mt-6 ml-6'>
           <h2>Email address</h2>
           <input type='email' value={email} placeholder='abc@example.com' className='bg-blue-2 rounded h-10 w-72 pl-4 caret-blue-1  focus:outline-none' onChange={(e: any) => setmail(e.target.value)}></input>
-
-          {error && <p className='text-sm text-red-700'>{error}</p>}
-          {!passwordSectionVisible && <button className='bg-blue-1 h-10 w-72 mt-8 rounded-3xl' onClick={handleContinue}>Continue</button>}
-
-
-          {passwordSectionVisible && (
             <>
               <h2 className='mt-2'>Password</h2>
               <input
@@ -112,9 +106,6 @@ function Page() {
               )}
               <button className='bg-blue-1 h-10 w-80 mt-4 rounded-3xl' onClick={handleLogin}>Login</button>
             </>
-          )}
-
-
         </div>
         <div className='flex justify-between align-center mt-8 ml-6'>
           <div className='text-sm '>No account? <a className='text-blue-1 cursor-pointer' onClick={() => { router.push('/signup'); } }><br/> Sign up</a></div>

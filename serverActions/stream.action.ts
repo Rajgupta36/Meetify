@@ -1,34 +1,25 @@
-"use server"
+"use server";
 
-import { getServerSession } from "next-auth";
+import { StreamClient } from "@stream-io/node-sdk";
 import { authOptions } from "@/app/lib/auth";
-import { StreamClient, UserObjectRequest } from "@stream-io/node-sdk";
-
+import { getServerSession } from "next-auth/next";
 const apiKey = process.env.NEXT_PUBLIC_STREAM_API_KEY;
-const token = process.env.NEXT_STREAM_APP_TOKEN;
+const apiSecret = process.env.STREAM_SECRET_KEY;
 
 export const tokenProvider = async () => {
     const { user } = await getServerSession(authOptions);
+    if (!user) throw new Error("User is  not logged in");
+    if (!apiKey) throw new Error("No API key");
+    if (!apiSecret) throw new Error("No API secret");
 
-    if (!user) throw new Error('User not found');
-    if (!apiKey) throw new Error('API key not found');
-    if (!token) throw new Error('Token not found')
-    const client: any = new StreamClient(apiKey, token)
+    const client = new StreamClient(apiKey, apiSecret);
 
-    const userId = user.id;
-    const newUser: UserObjectRequest = {
-        id: userId,
-        role: 'user',
-        custom: {
-            color: 'red',
-        },
-        name: user.name || user.email,
-        image: user.image || `https://getstream.io/random_svg/?name=${user.name.charAt(0) || user.email.charAt(0)}`,
-    };
     const exp = Math.round(new Date().getTime() / 1000) + 60 * 60;
-    const issuedAt = Math.round(new Date().getTime() / 1000) - 60;
-    const usertoken = client.createToken(userId, exp, issuedAt);
-    return usertoken;
 
-}
+    const issued = Math.floor(Date.now() / 1000) - 60;
+
+    const token = client.createToken(user?.email?.split('@')[0] || "default", exp, issued);
+    console.log(user, token);
+    return token;
+};
 

@@ -9,18 +9,18 @@ export const authOptions = {
         CredentialsProvider({
             name: 'Credentials',
             credentials: {
-                phone: { label: "email", type: "email", placeholder: "john@gmail.com", required: true },
+                email: { label: "Email", type: "email", placeholder: "john@gmail.com", required: true },
                 password: { label: "Password", type: "password", required: true }
             },
             async authorize(credentials: any) {
                 try {
-                    const hashPassword = await bcrypt.hash(credentials.password, 10);
                     const existingUser = await prisma.user.findFirst({
                         where: {
                             email: credentials.email
                         }
                     });
 
+                    // If the user exists, compare the password
                     if (existingUser) {
                         const passwordValidation = await bcrypt.compare(credentials.password, existingUser.password);
                         if (passwordValidation) {
@@ -30,21 +30,25 @@ export const authOptions = {
                                 email: existingUser.email
                             };
                         }
-                        return null;
+                        return null; // Incorrect password
                     }
 
+                    // If the user does not exist, create a new user
+                    const hashPassword = await bcrypt.hash(credentials.password, 10); // Only hash on sign-up
                     const user = await prisma.user.create({
-                        //@ts-ignore
                         data: {
                             email: credentials.email,
-                            password: hashPassword
+                            password: hashPassword,
+                            name: credentials.name || "Default Name", // Add name if it's part of the credentials
                         }
                     });
+
                     return {
                         id: user.id.toString(),
                         name: user.name,
                         email: user.email
                     };
+
                 } catch (error) {
                     console.error("Authorization error:", error);
                     return null;

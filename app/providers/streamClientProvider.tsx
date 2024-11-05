@@ -19,10 +19,12 @@ const StreamVideoProvider = ({children}:{children:React.ReactNode}) => {
     if (status !== 'authenticated' || !session ) return;
     if(!apiKey)  throw Error('API key not found');
     if(session){}
+    console.log(session);
+    console.log(session?.user);
     //@ts-ignore
     const client = new StreamVideoClient({apiKey,user:{
-      id:session?.user?.email,
-      name:session?.user?.name || session?.user?.email?.charAt(0).toUpperCase,
+      id:session?.user?.email?.split('@')[0] || 'default',
+      name:session?.user?.name || session?.user?.email?.charAt(0).toUpperCase || 'Default',
       image:session?.user?.image || `https://getstream.io/random_png/?id=curious-sun-9&name=${session?.user?.name || session?.user?.email?.charAt(0).toUpperCase}`,
     },
     tokenProvider: tokenProvider
