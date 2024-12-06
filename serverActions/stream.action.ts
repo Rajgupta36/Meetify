@@ -18,8 +18,7 @@ export const tokenProvider = async () => {
 
     const issued = Math.floor(Date.now() / 1000) - 60;
 
-    const token = client.createToken(user?.email?.split('@')[0] || "default", exp, issued);
-    console.log(user, token);
+    const token = client.createToken(user?.id || "default", exp, issued);
     return token;
 };
 

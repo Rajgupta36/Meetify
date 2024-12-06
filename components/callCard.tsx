@@ -1,30 +1,26 @@
-'use client';
+"use client";
 
-import { Call, CallRecording } from '@stream-io/video-react-sdk';
+import { Call, CallRecording } from "@stream-io/video-react-sdk";
 
-import Loader from './loader';
-import { useGetCall } from '@/hooks/useGetCall';
-import CallPreviewCard from './callpreviewcard';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Calendar, CalendarCheck, Clapperboard, Play } from 'lucide-react';
+import Loader from "./loader";
+import { useGetCall } from "@/hooks/useGetCall";
+import CallPreviewCard from "./callpreviewcard";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Calendar, CalendarCheck, Clapperboard, Play } from "lucide-react";
 
-const CallList = ({ type }: { type: 'ended' | 'upcoming' | 'recordings' }) => {
+const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
   const router = useRouter();
-  const { endedCalls,
-    UpcomingCalls,
-    CallRecordings,
-    Loading} =
-    useGetCall();
+  const { endedCalls, UpcomingCalls, CallRecordings, Loading } = useGetCall();
   const [recordings, setRecordings] = useState<CallRecording[]>([]);
 
   const getCalls = () => {
     switch (type) {
-      case 'ended':
+      case "ended":
         return endedCalls;
-      case 'recordings':
+      case "recordings":
         return recordings;
-      case 'upcoming':
+      case "upcoming":
         return UpcomingCalls;
       default:
         return [];
@@ -33,31 +29,31 @@ const CallList = ({ type }: { type: 'ended' | 'upcoming' | 'recordings' }) => {
 
   const getNoCallsMessage = () => {
     switch (type) {
-      case 'ended':
-        return 'No Previous Calls';
-      case 'upcoming':
-        return 'No Upcoming Calls';
-      case 'recordings':
-        return 'No Recordings';
+      case "ended":
+        return "No Previous Calls";
+      case "upcoming":
+        return "No Upcoming Calls";
+      case "recordings":
+        return "No Recordings";
       default:
-        return '';
+        return "";
     }
   };
 
   useEffect(() => {
     const fetchRecordings = async () => {
       const callData = await Promise.all(
-        CallRecordings?.map((meeting) => meeting.queryRecordings()) ?? [],
+        CallRecordings?.map((meeting) => meeting.queryRecordings()) ?? []
       );
 
       const recordings = callData
         .filter((call) => call.recordings.length > 0)
         .flatMap((call) => call.recordings);
 
-        setRecordings(recordings);
+      setRecordings(recordings);
     };
 
-    if (type === 'recordings') {
+    if (type === "recordings") {
       fetchRecordings();
     }
   }, [type, CallRecordings]);
@@ -74,32 +70,38 @@ const CallList = ({ type }: { type: 'ended' | 'upcoming' | 'recordings' }) => {
           <CallPreviewCard
             key={(meeting as Call).id}
             icon={
-              type === 'ended'
-                ? <CalendarCheck />
-                : type === 'upcoming'
-                  ? <Calendar />
-                  : <Clapperboard />
+              type === "ended" ? (
+                <CalendarCheck />
+              ) : type === "upcoming" ? (
+                <Calendar />
+              ) : (
+                <Clapperboard />
+              )
             }
             title={
               (meeting as Call).state?.custom?.description ||
               (meeting as CallRecording).filename?.substring(0, 20) ||
-              'Personal Meeting'
+              "Personal Meeting"
             }
             date={
               (meeting as Call).state?.startsAt?.toLocaleString() ||
               (meeting as CallRecording).start_time?.toLocaleString()
             }
-            isPreviousMeeting={type === 'ended'}
+            isPreviousMeeting={type === "ended"}
             link={
-              type === 'recordings'
+              type === "recordings"
                 ? (meeting as CallRecording).url
-                : `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${(meeting as Call).id}`
+                : `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${
+                    (meeting as Call).id
+                  }`
             }
-            buttonIcon1={type === 'recordings' ?  <Play /> : undefined}
-            buttonText={type === 'recordings' ? 'Play' : 'Start'}
+            buttonIcon1={type === "recordings" ? <Play /> : undefined}
+            buttonText={type === "recordings" ? "Play" : "Start"}
             handleClick={
-              type === 'recordings'
-                ? () =>{ router.push((meeting as CallRecording).url)}
+              type === "recordings"
+                ? () => {
+                    router.push((meeting as CallRecording).url);
+                  }
                 : () => router.push(`/meeting/${(meeting as Call).id}`)
             }
           />

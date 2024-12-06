@@ -1,4 +1,3 @@
-
 "use client";
 import { useStreamVideoClient } from "@stream-io/video-react-sdk";
 import { useRouter } from "next/navigation";
@@ -29,35 +28,36 @@ const Table = ({
   );
 };
 interface User {
-  id : string,
-  name:string,
-  email:string,
-  image:string
+  id: string;
+  name: string;
+  email: string;
+  image: string;
 }
 const PersonalRoom = () => {
-  const [user,setUser]= useState<User>();
-  useEffect(()=>{
-   
-    const fetchdata = async()=>{
+  const [user, setUser] = useState<User>();
+  useEffect(() => {
+    const fetchdata = async () => {
       const data = await tokenProvider();
       setUser(data);
-    }
+    };
     fetchdata();
-  },[])
+  }, []);
   const router = useRouter();
   const client = useStreamVideoClient();
   const { toast } = useToast();
-  
-  const meetingId = user?.id;
-  
+
+  let meetingId = user?.id;
+
   const { call } = useGetCallById(meetingId!);
-  
+  meetingId = call?.id;
   const startRoom = async () => {
     if (!client) return;
-     if(!user){ return <Loader/>}
+    if (!user) {
+      return <Loader />;
+    }
 
     const newCall = client.call("default", meetingId!);
-    
+
     if (!call) {
       await newCall.getOrCreate({
         data: {
@@ -75,7 +75,12 @@ const PersonalRoom = () => {
     <section className="bg-dark-2 m-8 p-6 rounded-[14px] flex  flex-col gap-10 text-white">
       <h1 className="text-xl font-bold lg:text-3xl">Personal Meeting Room</h1>
       <div className="flex w-full flex-col gap-8 xl:max-w-[900px]">
-        <Table title="Topic" description={`${user?.name}'s Meeting Room`} />
+        <Table
+          title="Topic"
+          description={`${
+            user?.name || user?.email.split("@")[0]
+          }'s Meeting Room`}
+        />
         <Table title="Meeting ID" description={meetingId!} />
         <Table title="Invite Link" description={meetingLink} />
       </div>
@@ -92,7 +97,7 @@ const PersonalRoom = () => {
             });
           }}
         >
-         <Copy/> Copy Invitation
+          <Copy /> Copy Invitation
         </Button>
       </div>
     </section>
